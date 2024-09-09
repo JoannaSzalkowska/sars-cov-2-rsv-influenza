@@ -70,7 +70,7 @@ for item in seqs:
 
 
 # Ścieżka do folderu, gdzie mają zostać zapisane pliki
-output_folder = r"C:\Users\Asia\Desktop\praca magisterska\pojedyncze-i-zwierz\nextclade"
+output_folder = "./result/plots"
 
 # Funkcja do wyodrębnienia sekwencji na podstawie nazwy wariantu
 def get_variant_sequences(seqs, variant_keyword):
