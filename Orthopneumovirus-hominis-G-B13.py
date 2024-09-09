@@ -112,9 +112,10 @@ end = gapped_pos(seqs['Orthopneumovirus-hominis-B_13'], 5584)#5765
 
 # Wyznaczanie fragmentów genu G (bez przerw "-")
 pG= {}
-for seq in fasta:
-    pG_seq = seq.seq[start-1:end]  # Wybieramy odpowiedni fragment genu G
+for seqrecord in fasta:
+    pG_seq = seqrecord.seq[start-1:end]  # Wybieramy odpowiedni fragment genu G
     cleaned_seq = pG_seq.replace('-', '')  # Usuwanie przerw "-"   
+    pG[seqrecord.id] = cleaned_seq
 
 # Przetłumaczenie sekwencji nukleotydowych na aminokwasy i zapisanie do pliku FASTA
 with open('result/G_translated.fasta', 'w') as f:  # Nowy plik wynikowy
@@ -122,7 +123,7 @@ with open('result/G_translated.fasta', 'w') as f:  # Nowy plik wynikowy
         translated_seq = pG_seq.translate()  # Tłumaczenie na aminokwasy
         f.write('>' + pG_id + '\n')  # Zapisanie nazwy sekwencji
         f.write(str(translated_seq) + '\n')  # Zapisanie przetłumaczonej sekwencji aminokwasowej
-
+    f.close()
 print("Plik 'pG_translated.fasta' został utworzony.")
 
        
