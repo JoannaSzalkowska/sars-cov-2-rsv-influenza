@@ -7,7 +7,9 @@ file_path = "./data/samsars-ref.fasta"  # ścieżka do pliku
 fasta = list(SeqIO.parse(file_path, format= "fasta"))
 
 # Tworzenie słownika
-seqs = {entry.id: entry.seq for entry in fasta}
+seqs = {}
+for entry in fasta:
+    seqs[entry.id] = entry.seq
 
 #21563..25384 pos bialko S od ref NC_045512.2
 
@@ -25,9 +27,9 @@ def gapped_pos(seq, pos):
             return pos + gaps
 
 #print(gapped_pos('aaa-aa-a', 6))
-print(gapped_pos(seqs['reference'], 21563))
+start = gapped_pos(seqs['reference'], 21563)
 #21584
-print(gapped_pos(seqs['reference'], 25384))
+end = gapped_pos(seqs['reference'], 25384)
 #25414
 
 
@@ -35,7 +37,7 @@ print(gapped_pos(seqs['reference'], 25384))
 # Wyznaczenie fragmentów genu spike S (bez przerw "-")
 spikes = {}
 for seqrecord in fasta:
-    spikes_seq = seqrecord.seq[21584 - 1:25414]  # Wycinamy fragment genu spike
+    spikes_seq = seqrecord.seq[start - 1:end]  # Wycinamy fragment genu spike S
     cleaned_seq = spikes_seq.replace('-', '')  # Usuwamy przerwy
     spikes[seqrecord.id] = cleaned_seq
     
@@ -49,7 +51,7 @@ with open('result/spikes_translated.fasta', 'w') as f:  # Nowy plik wynikowy
 print("Plik 'spikes_translated.fasta' został utworzony.")
 
 #po alignment 
-file_path2 = "./data/seqs_ali.fasta"  # ścieżka do pliku
+file_path2 = "./data/spikes-ali.fasta"  # ścieżka do pliku
 spikes_aa = list(SeqIO.parse(file_path2, format= "fasta"))
 
 seqs = {}

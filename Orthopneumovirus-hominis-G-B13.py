@@ -7,8 +7,11 @@ import os
 file_path = "./data/ortho-align.fasta"  # ścieżka do pliku
 fasta = list(SeqIO.parse(file_path, format= "fasta"))
 
+seqs = {}
+for entry in fasta:
+    seqs[entry.id] = entry.seq
 
-reference_seq = fasta[30].seq
+reference_seq = seqs['Orthopneumovirus-hominis-B_13']
 
 # Funkcja porównująca mutacje do sekwencji referencyjnej i wypisująca różnice oraz liczbę mutacji
 def get_mutations(reference, variant):
@@ -127,7 +130,7 @@ with open('result/G_translated.fasta', 'w') as f:  # Nowy plik wynikowy
 print("Plik 'pG_translated.fasta' został utworzony.")
 
        
-file_path2 = "./data/ortho-prot.fasta"
+file_path2 = "./data/ortho-G-13.fasta"
 pG_aa = list(SeqIO.parse(file_path2, format= "fasta"))
 
 # Funkcja do wyznaczania mutacji
